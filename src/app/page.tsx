@@ -1,101 +1,104 @@
-import Image from "next/image";
+"use client";
+
+import { InputPesquisa } from "@/components/InputPesquisa";
+import { ItemLivros } from "@/components/ItemLivros";
+import { LivroI } from "@/utils/types/livros";
+import { useEffect, useState } from "react";
+import { useClienteStore } from "@/context/cliente";
+import Link from "next/link";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [livros, setLivros] = useState<LivroI[]>([]);
+  const { cliente,logaCliente } = useClienteStore();
+  
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  useEffect(() => {
+    async function buscaCliente(idCliente: string) {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_URL_API}/clientes/${idCliente}`
+      );
+      if (response.status == 200) {
+        const dados = await response.json();
+
+        logaCliente(dados);
+      }
+    }
+    if (localStorage.getItem("client_key")) {
+      const clienteSalvo = localStorage.getItem("client_key") as string;
+      buscaCliente(clienteSalvo);
+    }
+
+    async function buscaDados() {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/livros`);
+      const dados = await response.json();
+      console.log(dados);
+      setLivros(dados);
+    }
+    buscaDados();
+  }, []);
+
+  const listaLivros = livros.map((livro) => (
+    <ItemLivros data={livro} key={livro.id} />
+  ));
+
+  return (
+    <>
+      <InputPesquisa setLivros={setLivros} />
+
+      <div className="mx-auto max-w-screen-2xl flex justify-center">
+        <h1 className="mt-3 mb-4 flex items-center text-5xl font-extrabold dark:text-black text-center">
+          Biblioteca
+          <span className="bg-red-500 text-black-800 text-2xl font-semibold me-2 px-2.5 py-0.5 rounded dark:bg-red-500 dark:text-black-800 ms-2">
+            IMA
+          </span>
+        </h1>
+      </div>
+      <div className="d-flex align-items-center justify-center">
+        <img src="./bibli.jpg" className="mx-auto" />
+      </div>
+
+      <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+        {listaLivros}
+      </section>
+
+      <footer className="bg-red-700 rounded-lg shadow dark:bg-gray-900 m-4">
+        <div className="w-full max-w-screen-xl mx-auto p-4 md:py-8">
+          <ul className="flex flex-wrap items-center mb-6 text-sm font-medium text-black-500 sm:mb-0 dark:text-black-400 justify-between">
+            <li className="flex-1 text-left pr-20">
+              <Link
+                href="/footer"
+                className="cursor-pointer text-extrabold font-extrabold text-black-500 dark:text-black hover:underline whitespace-nowrap"
+              >
+                Sobre o Ima
+              </Link>
+            </li>
+
+            <li className="flex-1 text-center px-20">
+              <Link
+                href="/mario"
+                className="cursor-pointer text-extrabold font-extrabold text-black-500 dark:text-black hover:underline whitespace-nowrap"
+              >
+                Quem foi Mário Alves
+              </Link>
+            </li>
+
+            <li className="flex-1 text-right pl-20">
+              <Link
+                href="/contato"
+                className="cursor-pointer text-extrabold font-extrabold text-black-500 dark:text-black hover:underline"
+              >
+                Contato
+              </Link>
+            </li>
+          </ul>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+        <hr className="my-6 border-gray-200 sm:mx-auto dark:border-black-700 lg:my-8" />
+        <span className="block text-semibold text-black-500 sm:text-center dark:text-black-400">
+          <a href="/" className="hover:underline me-5 mb-10">
+            Instituto Mário Alves™ © 2024.Todos os Direitos Reservados.
+          </a>
+        </span>
       </footer>
-    </div>
+    </>
   );
 }
