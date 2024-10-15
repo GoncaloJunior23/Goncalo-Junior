@@ -34,6 +34,7 @@ export default function Login() {
       const dados = await response.json();
       //alert("Ok")
       logaCliente(dados);
+      router.push("/");
 
       if (data.continuar) {
         localStorage.setItem("client_key", dados.id);
@@ -58,7 +59,7 @@ export default function Login() {
           alt="logo"
         />
       </div>
-
+      
       <section className="bg-gray-50 dark:bg-gray-900">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
           <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
@@ -134,12 +135,12 @@ export default function Login() {
                 </button>
                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                   Não está Cadastrado?{" "}
-                  <a
-                    href="#"
+                  <Link
+                    href={"/cadastro"}
                     className="font-medium text-primary-600 hover:underline dark:text-primary-500"
                   >
                     Cadastre-se
-                  </a>
+                  </Link>
                 </p>
               </form>
             </div>

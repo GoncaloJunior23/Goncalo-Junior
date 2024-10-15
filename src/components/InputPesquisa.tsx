@@ -1,5 +1,6 @@
 import { LivroI } from "@/utils/types/livros";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 type Inputs = {
   termo: string;
@@ -9,40 +10,41 @@ type InputsPesquisaProps = {
   setLivros: React.Dispatch<React.SetStateAction<LivroI[]>>;
 };
 
-export function InputPesquisa({setLivros}: InputsPesquisaProps) {
+export function InputPesquisa({ setLivros }: InputsPesquisaProps) {
   const { register, handleSubmit, reset } = useForm<Inputs>();
 
   async function enviaPesquisa(data: Inputs) {
     //alert(data.termo);
 
-    if (data.termo.length <2) {
+    if (data.termo.length < 2) {
       alert("Informe, no mínimo, 2 caracteres ou mais para pesquisar");
-      return
+      return;
     }
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/livros/pesquisa/${data.termo}`);
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_URL_API}/livros/pesquisa/${data.termo}`
+    );
 
     const dados = await response.json();
 
     if (dados.length == 0) {
       alert("Não há livros, autor com esse nome");
-      reset({termo: ""})
-      return
+      reset({ termo: "" });
+      return;
     }
 
     setLivros(dados);
-
   }
 
   async function mostraDestaques() {
     const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/livros`);
     const dados = await response.json();
-    reset({termo: ""})
     setLivros(dados);
+    reset({ termo: "" });
   }
 
   return (
-    <div className="flex max-w-5xl mx-auto mt-3">
+    <section className="flex max-w-5xl mx-auto mt-3">
       <form className="flex-1" onSubmit={handleSubmit(enviaPesquisa)}>
         <label
           htmlFor="default-search"
@@ -71,19 +73,21 @@ export function InputPesquisa({setLivros}: InputsPesquisaProps) {
           <input
             type="search"
             id="default-search"
-            className="block w-full p-4 ps-10 text-sm text-gray-900 border border-red-500 rounded-lg bg-gray-50 focus:ring-red-500 focus:border-red-500 dark:bg-gray-700 dark:border-red-600 dark:placeholder-red-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
-            placeholder="Autor, Código, Livro..."
+            className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-red-500 focus:border-red-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
+            placeholder="Pesquisa por (livro, autor, código do livro)"
             required
             {...register("termo")}
           />
           <button
             type="submit"
-            className="text-black absolute end-2.5 bottom-2.5 bg-red-500 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-black-300 font-semibold rounded-lg text-sm px-4 py-2 dark:bg-black-600 dark:hover:bg-black-700 dark:focus:ring-black-800"
+            className="text-black absolute end-2.5 bottom-2.5 bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
           >
             Buscar
           </button>
         </div>
       </form>
-    </div>
+
+      
+    </section>
   );
 }

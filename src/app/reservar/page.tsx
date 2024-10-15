@@ -6,8 +6,10 @@ import { useClienteStore } from "@/context/cliente";
 import Link from "next/link";
 
 type Inputs = {
-  codigo: number;
-  data: number;
+  codigodoCliente: string
+  codigodoLivro: string
+  datadaReserva: string
+  
 };
 
 export default function Reservar() {
@@ -18,19 +20,23 @@ export default function Reservar() {
   
 
   async function verificaReserva(data: Inputs) {
-    // console.log(data)
+     //console.log(data)
 
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_URL_API}/clientes/reservar`,
+      `${process.env.NEXT_PUBLIC_URL_API}/reservas/logReserva`,
       {
         headers: {
           "Content-Type": "application/json",
         },
         method: "POST",
-        body: JSON.stringify({ codigo: data.codigo, data: data.data }),
+        body: JSON.stringify({ 
+          codigodoCliente: data.codigodoCliente,
+          codigodoLivro: data.codigodoLivro,
+          datadaReserva: data.datadaReserva,
+         }),
       }
     );
-    // console.log(response)
+     //console.log(response)
     if (response.status == 200) {
       const dados = await response.json();
       //alert("Ok")
@@ -50,16 +56,18 @@ export default function Reservar() {
           </a>
           
           <div className="w-full bg-white rounded-lg shadow dark:border sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-            <form className="mt-5 max-w-sm mx-auto">
+            <form className="mt-5 max-w-sm mx-auto"
+            onSubmit={handleSubmit(verificaReserva)}>
               <div className="mb-5 mt-5">
                 <div className="mb-5">
                   <input
                     type="text"
-                    name="Código do cliente"
+                    
                     id="codigodoCliente"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
                     placeholder="Código do cliente"
                     required
+                    {...register("codigodoCliente")}
                   />
                 </div>
               </div>
@@ -67,11 +75,12 @@ export default function Reservar() {
               <div className="mb-5">
                 <input
                   type="text"
-                  name="Código do livro"
+                 
                   id="codigodoLivro"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
                   placeholder="Código do Livro"
                   required
+                  {...register("codigodoLivro")}
                 />
               </div>
   
@@ -79,10 +88,11 @@ export default function Reservar() {
                 <input
                   type="date"
                   id="datadaReserva"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
                   placeholder="Data da Reserva"
                   required
                   value={new Date().toISOString().split('T')[0]}
+                  {...register("datadaReserva")}
                 />
               </div>
 

@@ -43,18 +43,22 @@ export default function Home() {
 
   return (
     <>
+
+
       <InputPesquisa setLivros={setLivros} />
 
+      
+      <div className="d-flex align-items-center justify-center">
+        <img src="./bibli.jpg" className="mx-auto mt-10" />
+      </div>
+
       <div className="mx-auto max-w-screen-2xl flex justify-center">
-        <h1 className="mt-3 mb-4 flex items-center text-5xl font-extrabold dark:text-black text-center">
-          Biblioteca
+        <h1 className="mt-5 mb-4 flex items-center text-5xl font-extrabold dark:text-black text-center">
+        Sugestões de Leitura:&nbsp;Biblioteca
           <span className="bg-red-500 text-black-800 text-2xl font-semibold me-2 px-2.5 py-0.5 rounded dark:bg-red-500 dark:text-black-800 ms-2">
             IMA
           </span>
         </h1>
-      </div>
-      <div className="d-flex align-items-center justify-center">
-        <img src="./bibli.jpg" className="mx-auto" />
       </div>
 
       <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
