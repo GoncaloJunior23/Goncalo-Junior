@@ -1,6 +1,8 @@
 import { ClienteI } from '@/utils/types/clientes'
 import { create } from 'zustand'
 
+
+
 type ClienteStore = {
     cliente: ClienteI
     logaCliente: (clienteLogado: ClienteI) => void

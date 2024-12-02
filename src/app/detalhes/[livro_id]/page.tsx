@@ -5,6 +5,7 @@ import { FotoI } from "@/utils/types/fotos";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useClienteStore } from "@/context/cliente";
+import { ReservaI } from "@/utils/types/reservas";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import Link from "next/link";
@@ -76,9 +77,9 @@ export default function Detalhes() {
 
   return (
     <section>
-      <h1 className="ms-48 mt-10 mb-5 text-4xl font-bold tracking-tight text-gray-900 dark:text-white flex items-center text-center">
+      <h1 className="ms-48 mt-10 mb-5 text-4xl font-inter tracking-tight text-gray-900 dark:text-white flex items-center text-center">
         Sugestões de Leitura:&nbsp;
-        <span className="underline underline-offset-2 decoration-8 decoration-red-600">
+        <span className="decoration-none decoration-red-600">
           {" "}
           {livro?.titulo}{" "}
         </span>
@@ -93,20 +94,20 @@ export default function Detalhes() {
         </a>
         <div className="p-5">
           <a>
-            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+            <h5 className="mb-2 text-2xl font-inter tracking-tight text-gray-900 dark:text-white">
               {livro?.titulo}
             </h5>
           </a>
-          <p className="mb-3 font-semibold text-gray-700 dark:text-gray-400">
+          <p className="mb-3 font-inter text-gray-700 dark:text-gray-400">
             {livro?.autor}
           </p>
-          <p className="mb-3 font-bold text-gray-700 dark:text-gray-400">
+          <p className="mb-3 font-inter text-gray-700 dark:text-gray-400">
             {livro?.sinopse}
           </p>
           {cliente.id ? (
             <>
-              <h3 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-                O que achou do Livro!
+              <h3 className="text-xl font-inter tracking-tight text-gray-900 dark:text-white">
+                O que achou do Livro?
               </h3>
               <form onSubmit={handleSubmit(enviaComentario)}>
                 <input
@@ -125,7 +126,7 @@ export default function Detalhes() {
                 ></textarea>
                 <button
                   type="submit"
-                  className="ms-5 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-black bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+                  className="ms-5 inline-flex items-center px-3 py-2 text-sm font-inter text-center text-white bg-vermelho rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
                 >
                   Enviar Comentário
                   <svg
@@ -147,7 +148,7 @@ export default function Detalhes() {
               </form>
             </>
           ) : (
-            <h3 className="text-xl font-bold tracking-tight text-orange-700 dark:text-white">
+            <h3 className="text-xl font-inter tracking-tight text-orange-700 dark:text-white">
               ** Faça login para comentar o livro
             </h3>
           )}
@@ -156,7 +157,7 @@ export default function Detalhes() {
           </div>
           <Link
             href={"/reservar"}
-            className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-black bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+            className="inline-flex items-center ms-5 px-3 py-2 text-sm font-inter text-center text-white bg-vermelho rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
           >
             Reservar
             <svg

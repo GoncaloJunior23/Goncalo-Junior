@@ -44,11 +44,11 @@ export function InputPesquisa({ setLivros }: InputsPesquisaProps) {
   }
 
   return (
-    <section className="flex max-w-5xl mx-auto mt-3">
+    <section className="flex max-w-3xl mx-auto mt-3">
       <form className="flex-1" onSubmit={handleSubmit(enviaPesquisa)}>
         <label
           htmlFor="default-search"
-          className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+          className="mb-2 text-sm font-inter text-gray-900 sr-only dark:text-white"
         >
           Search
         </label>
@@ -80,7 +80,7 @@ export function InputPesquisa({ setLivros }: InputsPesquisaProps) {
           />
           <button
             type="submit"
-            className="text-black absolute end-2.5 bottom-2.5 bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+            className="text-white absolute end-2.5 bottom-2.5 bg-vermelho hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-inter rounded-lg text-sm px-4 py-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
           >
             Buscar
           </button>

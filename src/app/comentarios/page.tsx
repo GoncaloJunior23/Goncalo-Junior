@@ -70,7 +70,7 @@ export default function Comentarios() {
 
   return (
     <section className="max-w-7xl mx-auto">
-      <h1 className="mb-6 mt-4 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl dark:text-white">
+      <h1 className="mb-6 mt-4 text-3xl font-inter leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl dark:text-white">
         Listagem de{" "}
         <span className="underline underline-offset-3 decoration-8 decoration-red-400 dark:decoration-red-600">
           Meus Comentários

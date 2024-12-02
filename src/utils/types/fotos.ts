@@ -1,5 +1,5 @@
 export interface FotoI {
-    titulo: string | undefined
+    titulo: string 
     id: number
     autor: string
     codigoFoto: string
